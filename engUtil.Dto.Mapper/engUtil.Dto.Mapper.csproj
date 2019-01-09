@@ -3,7 +3,9 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <Copyright>Oliver Engels</Copyright>
-    <Description>Simple Dto-Mapper</Description>
+    <Description>A simple helper for data-transformation between the software layer</Description>
+    <RepositoryType>Git</RepositoryType>
+    <PackageTags>DTO,Mapper</PackageTags>
   </PropertyGroup>
 
 </Project>
