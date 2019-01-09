@@ -1,10 +1,9 @@
-﻿using engUtil.SimpleMapper.Common;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace engUtil.SimpleMapper
+namespace engUtil.Dto
 {
     internal static class Helper
     {

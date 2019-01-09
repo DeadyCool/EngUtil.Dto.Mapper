@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq.Expressions;
 
-namespace engUtil.SimpleMapper
+namespace engUtil.Dto
 {
     public class Map<TSource, TTarget> : IMap
     {

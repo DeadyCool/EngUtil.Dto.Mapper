@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace engUtil.SimpleMapper
+namespace engUtil.Dto
 {
     [AttributeUsage(AttributeTargets.Class)]
     public class MapDefinitionAttribute : Attribute

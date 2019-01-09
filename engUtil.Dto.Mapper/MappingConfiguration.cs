@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace engUtil.SimpleMapper
+﻿namespace engUtil.Dto
 {
     public class MappingConfiguration
     {

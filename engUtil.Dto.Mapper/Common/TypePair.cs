@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace engUtil.SimpleMapper.Common
+namespace engUtil.Dto
 {
     internal struct TypePair
     {

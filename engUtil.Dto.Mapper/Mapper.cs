@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace engUtil.SimpleMapper
+namespace engUtil.Dto
 {
     public class Mapper : IMapper
     {

@@ -1,4 +1,4 @@
-﻿namespace engUtil.SimpleMapper
+﻿namespace engUtil.Dto
 {
     public interface IMapDefinition
     {
