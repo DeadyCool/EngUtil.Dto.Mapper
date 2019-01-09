@@ -6,6 +6,8 @@
     <Description>A simple helper for data-transformation between the software layer</Description>
     <RepositoryType>Git</RepositoryType>
     <PackageTags>DTO,Mapper</PackageTags>
+    <RepositoryUrl>https://github.com/DeadyCool/EngUtil.Dto.Mapper</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/DeadyCool/EngUtil.Dto.Mapper</PackageProjectUrl>
   </PropertyGroup>
 
 </Project>
