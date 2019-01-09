@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Copyright>Oliver Engels</Copyright>
+    <Description>Simple Dto-Mapper</Description>
+  </PropertyGroup>
+
+</Project>
