@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace engUtil.Dto.Mapper_Test.Entities
 {
     public class InvoiceHeader
     {     
-        public InvoiceHeader(int recId, string invoiceRef, int vendor, DateTime createdDate, DateTime dueDate, string currencyType, int qty, double tax, double ammount)
+        public InvoiceHeader(int recId, string invoiceRef, int vendor, DateTime createdDate, DateTime dueDate, string currencyType, int qty, double tax, double ammount, ICollection<InvoicePosition> invoicePositions)
         {
             RecId = recId;
             InvoiceRef = invoiceRef;
@@ -15,6 +16,7 @@ namespace engUtil.Dto.Mapper_Test.Entities
             Qty = qty;
             Tax = tax;
             Ammount = ammount;
+            InvoicePositions = invoicePositions;
         }
 
         public int RecId { get; set; }
@@ -34,5 +36,7 @@ namespace engUtil.Dto.Mapper_Test.Entities
         public double Tax { get; set; }
 
         public double Ammount { get; set; }
+
+        public ICollection<InvoicePosition> InvoicePositions { get; set; }
     }
 }

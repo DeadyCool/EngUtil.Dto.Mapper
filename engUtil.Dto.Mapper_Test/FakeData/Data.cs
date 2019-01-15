@@ -1,6 +1,7 @@
 ﻿using engUtil.Dto.Mapper_Test.Entities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace engUtil.Dto.Mapper_Test.FakeData
 {
@@ -10,7 +11,7 @@ namespace engUtil.Dto.Mapper_Test.FakeData
         {
             return new List<InvoiceHeader>
             {
-                new InvoiceHeader(1,"1247945121", 55, DateTime.Parse("03.02.2017"), DateTime.Parse("17.02.2017"), "EUR", 14, 19, 182.93 )
+                new InvoiceHeader(1,"1247945121", 55, DateTime.Parse("03.02.2017"), DateTime.Parse("17.02.2017"), "EUR", 14, 19, 182.93, GetInvoicePositions().Where(x=> x.InvoiceId == 1).ToList())
             };
         }
 

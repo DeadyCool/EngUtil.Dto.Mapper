@@ -1,4 +1,6 @@
-﻿namespace engUtil.Dto.Mapper_Test.Entities
+﻿using System.Collections.Generic;
+
+namespace engUtil.Dto.Mapper_Test.Entities
 {
     public class InvoicePosition
     {
@@ -9,7 +11,7 @@
             ItemId = itemId;
             SKU = sku;
             Ammount = ammount;
-            Qty = qty;
+            Qty = qty;       
         }
 
         public int InvoiceId { get; set; }
