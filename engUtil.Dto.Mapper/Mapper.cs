@@ -165,7 +165,9 @@ namespace engUtil.Dto
                         Type targetType = lambda.Body.Type;
                         Type sourceType = lambda.Parameters[0].Type;
                         var mapBuilder = CreateMapBuilder(sourceType, targetType);
-                        mapBuilder.Description = mappingAttribute.Description;
+                        mapBuilder.Description = string.IsNullOrEmpty(mappingAttribute.Description) 
+                            ? $"{sourceType.Name} To {targetType.Name}"
+                            : mappingAttribute.Description;
                         mapBuilder.AddMap(exp);
                     }
                 }                

@@ -39,7 +39,6 @@ namespace engUtil.Dto.Mapper_Test
             var invoices = Data.GetInvoices();
             var result = invoices.Select(x=>  mapper.MapTo<InvoiceModel>(x)).ToList();
 
-
             Assert.IsTrue(result.FirstOrDefault(x=> x.Id == 1).TaxRate == 19);
         }
     }
