@@ -32,13 +32,27 @@ namespace engUtil.Dto.Mapper_Test
                         QuantityTotal = x.Qty,
                         TaxRate = x.Tax,
                         Tax = x.Ammount * (x.Tax * 0.01),
-                        NetAmmountTotal = x.Ammount + (x.Ammount * (x.Tax * 0.01))                        
+                        NetAmmountTotal = x.Ammount + (x.Ammount * (x.Tax * 0.01)),
+                        InvoiceLines = config.MapTo<InvoiceLineModel>(x.Positions)
                     });
+
+                config.CreateMappingFor<InvoicePosition, InvoiceLineModel>()
+                    .AddDescription("InvoicePosition To InvoiceLineModel")
+                    .AddMap(x => new InvoiceLineModel
+                    {
+                         InvoiceId = x.InvoiceId,
+                         ItemId = x.ItemId,
+                         LineNumber = x.LineNum,
+                         Ammount = $"{x.Ammount:c}",
+                         Qty = x.Qty,
+                         SKU = x.SKU
+                    });
+                
             });
 
-            var invoices = Data.GetInvoices();
-            var result = invoices.Select(x=>  mapper.MapTo<InvoiceModel>(x)).ToList();
+            var invoices = Data.GetInvoices();               
 
+            var result = invoices.Select(x=>  mapper.MapTo<InvoiceModel>(x)).ToList();
 
             Assert.IsTrue(result.FirstOrDefault(x=> x.Id == 1).TaxRate == 19);
         }

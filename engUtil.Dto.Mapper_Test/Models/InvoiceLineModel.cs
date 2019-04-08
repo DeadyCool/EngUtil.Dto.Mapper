@@ -14,7 +14,7 @@ namespace engUtil.Dto.Mapper_Test.Models
 
         public string SKU { get; set; }
 
-        public double Ammount { get; set; }
+        public string Ammount { get; set; }
 
         public double Qty { get; set; }
     }

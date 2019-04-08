@@ -1,4 +1,7 @@
-﻿namespace engUtil.Dto
+﻿using System.Collections;
+using System.Collections.Generic;
+
+namespace engUtil.Dto
 {
     public class MappingConfiguration
     {
@@ -16,6 +19,11 @@
         }        
 
         public TTarget MapTo<TTarget>(object instance)
+        {
+            return _mapper.MapTo<TTarget>(instance);
+        }
+
+        public IEnumerable<TTarget> MapTo<TTarget>(IEnumerable instance)
         {
             return _mapper.MapTo<TTarget>(instance);
         }

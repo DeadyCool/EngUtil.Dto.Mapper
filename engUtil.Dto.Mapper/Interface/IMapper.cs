@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 
 namespace engUtil.Dto
@@ -15,6 +17,8 @@ namespace engUtil.Dto
 
         Expression GetExpressionMap(Type sourceType, Type targetType);
 
-        TTarget MapTo<TTarget>(object instance);      
+        TTarget MapTo<TTarget>(object instance);
+
+        IEnumerable<TTarget> MapTo<TTarget>(IEnumerable instance);
     }
 }

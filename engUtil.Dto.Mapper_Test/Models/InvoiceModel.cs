@@ -24,5 +24,7 @@ namespace engUtil.Dto.Mapper_Test.Models
         public double Tax { get; set; }
 
         public double NetAmmountTotal { get; set; }
+
+        public IEnumerable<InvoiceLineModel> InvoiceLines { get; set; }
     }
 }

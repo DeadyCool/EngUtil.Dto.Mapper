@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Collections;
 
 namespace engUtil.Dto
 {
@@ -80,6 +81,18 @@ namespace engUtil.Dto
                     "Otherwise use the 'ScanForDtoMapping(assemblyWithDtoMappings)'- Method!");
             return (TTarget)mappingExpression?.MapObject(instance);
         }
+
+        public IEnumerable<TTarget> MapTo<TTarget>(IEnumerable enumerableInstance)
+        {
+            var instanceType = enumerableInstance.GetType().GetGenericArguments()[0];
+            var mappingExpression = MappingList.FirstOrDefault(x => x.SourceType == instanceType && x.TargetType == typeof(TTarget));
+            if (mappingExpression == null)
+                throw new ArgumentException($"Mapping '{instanceType.Name}' not found!\r\n" +
+                    "If you use AutoScan, make sure the Assembly is loaded in the current domain.\r\n" +
+                    "Otherwise use the 'ScanForDtoMapping(assemblyWithDtoMappings)'- Method!");
+            foreach(var item in enumerableInstance)       
+                yield return (TTarget)mappingExpression?.MapObject(item); 
+        }
         
         /// <summary>
         /// Get the expression to transform the Source-Type to Target-Type 
@@ -147,9 +160,7 @@ namespace engUtil.Dto
                 .GetTypes()
                 .Where(x => x.GetCustomAttribute<MapDefinitionAttribute>() != null);
             foreach (Type type in assemblyTypes)
-            {
-                var classAttribute = type.GetCustomAttribute<MapDefinitionAttribute>();
-                if (classAttribute == null) continue;
+            {      
                 object mappingType = Activator.CreateInstance(type, this);
                 var properties = mappingType.GetType().GetProperties();
                 foreach (var property in properties)
