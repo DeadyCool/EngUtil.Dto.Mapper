@@ -5,7 +5,7 @@ namespace engUtil.Dto
 {
     public class MappingConfiguration
     {
-        private IMapper _mapper;
+        private readonly IMapper _mapper;
 
         public MappingConfiguration(IMapper mapper)
         {

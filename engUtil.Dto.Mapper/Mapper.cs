@@ -45,6 +45,33 @@ namespace engUtil.Dto
         }
 
         /// <summary>
+        /// Gets the definition from object
+        /// </summary>
+        /// <param name="instance"></param>
+        public void GetMapDefinition(object instance)
+        {
+            var properties = instance.GetType().GetProperties();
+            // find mapattribute
+            foreach (var property in properties)
+            {
+                var mappingAttribute = (MapAttribute)property.GetCustomAttribute(typeof(MapAttribute));
+                if (mappingAttribute != null)
+                {
+                    Expression exp = (Expression)property.GetValue(instance);
+                    var lambda = (LambdaExpression)exp;
+                    var param = (ICollection<ParameterExpression>)lambda.Parameters;
+                    if (param.Count() != 1)
+                        throw new ArgumentException($"Wrong Parameterlenght. Expression must be Expression<Func<TIn,TOut>>.\r\nArgumentparameter lenght is [{param.Count}]! ");
+                    Type targetType = lambda.Body.Type;
+                    Type sourceType = lambda.Parameters[0].Type;
+                    var mapBuilder = CreateMapBuilder(sourceType, targetType);
+                    mapBuilder.Description = mappingAttribute.Description;
+                    mapBuilder.AddMap(exp);
+                }
+            }
+        }
+
+        /// <summary>
         /// Configurate the Mapper
         /// </summary>
         /// <param name="config"></param>
@@ -162,24 +189,7 @@ namespace engUtil.Dto
             foreach (Type type in assemblyTypes)
             {      
                 object mappingType = Activator.CreateInstance(type, this);
-                var properties = mappingType.GetType().GetProperties();
-                foreach (var property in properties)
-                {
-                    var mappingAttribute = (MapAttribute)property.GetCustomAttribute(typeof(MapAttribute));
-                    if (mappingAttribute != null)
-                    {
-                        Expression exp = (Expression)property.GetValue(mappingType);
-                        var lambda = (LambdaExpression)exp;
-                        var param = (ICollection<ParameterExpression>)lambda.Parameters;
-                        if (param.Count() != 1)
-                            throw new ArgumentException($"Wrong Parameterlenght. Expression must be Expression<Func<TIn,TOut>>.\r\nArgumentparameter lenght is [{param.Count}]! ");
-                        Type targetType = lambda.Body.Type;
-                        Type sourceType = lambda.Parameters[0].Type;
-                        var mapBuilder = CreateMapBuilder(sourceType, targetType);
-                        mapBuilder.Description = mappingAttribute.Description;
-                        mapBuilder.AddMap(exp);
-                    }
-                }                
+                GetMapDefinition(mappingType);
             }
             _scannedAssemblies.Add(assembly.FullName);
         }
@@ -191,6 +201,8 @@ namespace engUtil.Dto
             foreach (var assembly in assemblies)
                 GetMappingsByAttribute(assembly);          
         }
+
+
 
         #endregion
     }

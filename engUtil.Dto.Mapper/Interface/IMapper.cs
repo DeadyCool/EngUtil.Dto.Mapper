@@ -17,6 +17,8 @@ namespace engUtil.Dto
 
         Expression GetExpressionMap(Type sourceType, Type targetType);
 
+        void GetMapDefinition(object instance);
+
         TTarget MapTo<TTarget>(object instance);
 
         IEnumerable<TTarget> MapTo<TTarget>(IEnumerable instance);
