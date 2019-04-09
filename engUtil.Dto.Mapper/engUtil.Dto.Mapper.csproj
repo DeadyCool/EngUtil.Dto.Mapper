@@ -8,9 +8,9 @@
     <PackageTags>DTO,Mapper</PackageTags>
     <RepositoryUrl>https://github.com/DeadyCool/EngUtil.Dto.Mapper</RepositoryUrl>
     <PackageProjectUrl>https://github.com/DeadyCool/EngUtil.Dto.Mapper</PackageProjectUrl>
-    <Version>1.0.1</Version>
-    <AssemblyVersion>1.0.0.1</AssemblyVersion>
-    <FileVersion>1.0.0.1</FileVersion>
+    <Version>1.0.2</Version>
+    <AssemblyVersion>1.0.0.2</AssemblyVersion>
+    <FileVersion>1.0.0.2</FileVersion>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
