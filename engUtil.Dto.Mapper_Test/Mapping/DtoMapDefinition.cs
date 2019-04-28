@@ -8,6 +8,7 @@ namespace engUtil.Dto.Mapper_Test.Mapping
 {
     public class DtoMapDefinition : MapDefinition
     {
+        /*
         public DtoMapDefinition(IMapper mapper) 
             : base(mapper)
         {
@@ -43,5 +44,6 @@ namespace engUtil.Dto.Mapper_Test.Mapping
                 LineNumber = x.LineNum,
                 Qty = x.Qty
             };
+         */
     }
 }

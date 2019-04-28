@@ -8,7 +8,6 @@ namespace engUtil.Dto
 
         #region fields
 
-        private Expression _expressionMap;   
         private IMapper _mapper;
 
         #endregion
@@ -32,17 +31,17 @@ namespace engUtil.Dto
 
         public string Description { get; set ; }
 
-        public Expression ExpressionMap => _expressionMap;
+        public Expression ExpressionMap { get; private set; }
 
         #endregion
 
         #region methods
 
-         /// <summary>
-         /// Adds a description to the map
-         /// </summary>
-         /// <param name="description"></param>
-         /// <returns></returns>
+        /// <summary>
+        /// Adds a description to the map
+        /// </summary>
+        /// <param name="description"></param>
+        /// <returns></returns>
         public Map<TSource,TTarget> AddDescription(string description)
         {
             Description = description;
@@ -56,9 +55,9 @@ namespace engUtil.Dto
         /// <typeparam name="TTarget">The Target Type</typeparam>
         public void AddMap(Expression<Func<TSource, TTarget>> expressionMap)
         {
-            if (_expressionMap != null)
+            if (ExpressionMap != null)
                 throw new ArgumentException("Expression already set!");
-            _expressionMap = expressionMap;
+            ExpressionMap = expressionMap;
             ((Mapper)_mapper).AddMapping(this);        
         }
 
@@ -72,9 +71,9 @@ namespace engUtil.Dto
             var funcTypes = Helper.GetExpressionInputOutputTypes(expressionMap);
             if (SourceType != funcTypes.InType && TargetType != funcTypes.OutType)
                 throw new ArgumentException($"Expression disaccorded with TTarget or TSource");
-            if (_expressionMap != null)
+            if (ExpressionMap != null)
                 throw new ArgumentException("Expression already set!");
-            _expressionMap = expressionMap;
+            ExpressionMap = expressionMap;
             ((Mapper)_mapper).AddMapping(this);         
         }
 
@@ -86,13 +85,13 @@ namespace engUtil.Dto
         public object MapObject(object instance)
         {
             if (instance.GetType() == SourceType)
-                return ((Expression<Func<TSource, TTarget>>)_expressionMap).Compile().Invoke((TSource)instance);
+                return ((Expression<Func<TSource, TTarget>>)ExpressionMap).Compile().Invoke((TSource)instance);
             throw new ArgumentNullException($"Type not found!\r\nInstanceType is {instance.GetType().Name}");
         }
 
         public Expression GetExpression()
         {
-            return _expressionMap;
+            return ExpressionMap;
         }
 
         #endregion

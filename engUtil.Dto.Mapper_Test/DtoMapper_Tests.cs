@@ -14,9 +14,10 @@ namespace engUtil.Dto.Mapper_Test
     public class DtoMapper_Tests
     {
         [TestMethod]
-        public void CreateMapping_Test()
+        public void CreateCodeMapping_Test()
         {
             var mapper = new Mapper();
+
             mapper.Configure(config =>
             {
                 config.CreateMappingFor<InvoiceHeader, InvoiceModel>()
