@@ -4,16 +4,20 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Collections;
+using System.Reflection.Emit;
+using System.Threading;
 
 namespace engUtil.Dto
 {
     public class Mapper : IMapper
     {
-        #region fields
+        #region fields       
 
         internal IList<IMap> MappingList = new List<IMap>();
 
         private HashSet<string> _scannedAssemblies = new HashSet<string>();
+
+        private HashSet<string> _scannedObjects = new HashSet<string>();
 
         #endregion     
 
@@ -50,6 +54,9 @@ namespace engUtil.Dto
         /// <param name="instance"></param>
         public void GetMapDefinition(object instance)
         {
+            var objectTypeName = instance.GetType().FullName;
+            if (_scannedObjects.Contains(objectTypeName))
+                return;
             var properties = instance.GetType().GetProperties();
             // find mapattribute
             foreach (var property in properties)
@@ -69,6 +76,7 @@ namespace engUtil.Dto
                     mapBuilder.AddMap(exp);
                 }
             }
+            _scannedObjects.Add(objectTypeName);
         }
 
         /// <summary>
@@ -89,7 +97,7 @@ namespace engUtil.Dto
         public Map<TSource, TTarget> CreateMappingFor<TSource, TTarget>()
             where TSource : class
             where TTarget : class
-        {   
+        {
             return new Map<TSource, TTarget>(this);
         }
 
@@ -99,8 +107,8 @@ namespace engUtil.Dto
         /// <typeparam name="TTarget">The Target Type</typeparam>
         /// <param name="instance">the object-instance that will be mapped to TTarget Type</param>
         public TTarget MapTo<TTarget>(object instance)
-        {           
-            var instanceType = instance.GetType(); 
+        {
+            var instanceType = instance.GetType();
             var mappingExpression = MappingList.FirstOrDefault(x => x.SourceType == instanceType && x.TargetType == typeof(TTarget));
             if (mappingExpression == null)
                 throw new ArgumentException($"Mapping '{instanceType.Name}' not found!\r\n" +
@@ -117,10 +125,10 @@ namespace engUtil.Dto
                 throw new ArgumentException($"Mapping '{instanceType.Name}' not found!\r\n" +
                     "If you use AutoScan, make sure the Assembly is loaded in the current domain.\r\n" +
                     "Otherwise use the 'ScanForDtoMapping(assemblyWithDtoMappings)'- Method!");
-            foreach(var item in enumerableInstance)       
-                yield return (TTarget)mappingExpression?.MapObject(item); 
+            foreach (var item in enumerableInstance)
+                yield return (TTarget)mappingExpression?.MapObject(item);
         }
-        
+
         /// <summary>
         /// Get the expression to transform the Source-Type to Target-Type 
         /// (returns the MemberExpression 'Expression&lt;Func&lt;TSource, TTarget&gt;&gt;')
@@ -138,7 +146,7 @@ namespace engUtil.Dto
         public Expression<Func<TSource, TTarget>> GetExpressionMap<TSource, TTarget>()
             where TSource : class
             where TTarget : class
-        {   
+        {
             var mapping = GetExpressionMap(typeof(TSource), typeof(TTarget));
             if (mapping == null) return null;
             return (Expression<Func<TSource, TTarget>>)mapping;
@@ -175,7 +183,7 @@ namespace engUtil.Dto
         private IMap CreateMapBuilder(Type sourceType, Type targetType)
         {
             Type constructedType = typeof(Map<,>).MakeGenericType(sourceType, targetType);
-            var mapBuilder = (IMap)Activator.CreateInstance(constructedType, new object[] { this });            
+            var mapBuilder = (IMap)Activator.CreateInstance(constructedType, new object[] { this });
             return mapBuilder;
         }
 
@@ -187,23 +195,23 @@ namespace engUtil.Dto
                 .GetTypes()
                 .Where(x => x.GetCustomAttribute<MapDefinitionAttribute>() != null);
             foreach (Type type in assemblyTypes)
-            {      
-                object mappingType = Activator.CreateInstance(type, this);
+            {          
+                var mappingType = (MapDefinition)Activator.CreateInstance(type);
+                mappingType.Mapper = this;
                 GetMapDefinition(mappingType);
             }
             _scannedAssemblies.Add(assembly.FullName);
         }
 
         private void ScanAssembliesForDtoMappings()
-        {            
-            var currentDomain = AppDomain.CurrentDomain;           
+        {
+            var currentDomain = AppDomain.CurrentDomain;
             var assemblies = currentDomain.GetAssemblies();
             foreach (var assembly in assemblies)
-                GetMappingsByAttribute(assembly);          
+                GetMappingsByAttribute(assembly);
         }
-
-
 
         #endregion
     }
+
 }
