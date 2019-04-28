@@ -3,10 +3,6 @@ using engUtil.Dto.Mapper_Test.FakeData;
 using engUtil.Dto.Mapper_Test.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
-using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Text;
 
 namespace engUtil.Dto.Mapper_Test
 {
@@ -47,8 +43,7 @@ namespace engUtil.Dto.Mapper_Test
                          Ammount = $"{x.Ammount:c}",
                          Qty = x.Qty,
                          SKU = x.SKU
-                    });
-                
+                    });                
             });
 
             var invoices = Data.GetInvoices();               

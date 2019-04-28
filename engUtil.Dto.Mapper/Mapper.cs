@@ -83,7 +83,7 @@ namespace engUtil.Dto
         /// Configurate the Mapper
         /// </summary>
         /// <param name="config"></param>
-        public void Configure(Action<MapConfig> config)
+        public void Configure(Action<IMapConfig> config)
         {
             config.Invoke(new MapConfig(this));
         }
