@@ -1,6 +1,7 @@
 ﻿using engUtil.Dto.Mapper_Test.Entities;
 using engUtil.Dto.Mapper_Test.FakeData;
 using engUtil.Dto.Mapper_Test.Models;
+using EngUtil.Dto;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 
@@ -16,8 +17,7 @@ namespace engUtil.Dto.Mapper_Test
 
             mapper.Configure(config =>
             {
-                config.CreateMappingFor<InvoiceHeader, InvoiceModel>()
-                    .AddDescription("Transform InvoiceHeaderEntity To InvoiceModel")
+                config.CreateMappingFor<InvoiceHeader, InvoiceModel>("Transform InvoiceHeaderEntity To InvoiceModel")
                     .AddMap(x => new InvoiceModel
                     {
                         Id = x.RecId,
@@ -33,8 +33,7 @@ namespace engUtil.Dto.Mapper_Test
                         InvoiceLines = config.MapTo<InvoiceLineModel>(x.Positions)
                     });
 
-                config.CreateMappingFor<InvoicePosition, InvoiceLineModel>()
-                    .AddDescription("InvoicePosition To InvoiceLineModel")
+                config.CreateMappingFor<InvoicePosition, InvoiceLineModel>("InvoicePosition To InvoiceLineModel")
                     .AddMap(x => new InvoiceLineModel
                     {
                          InvoiceId = x.InvoiceId,

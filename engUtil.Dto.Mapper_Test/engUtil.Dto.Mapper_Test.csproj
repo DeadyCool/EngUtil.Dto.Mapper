@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\engUtil.Dto.Mapper\engUtil.Dto.Mapper.csproj" />
+    <ProjectReference Include="..\engUtil.Dto.Mapper\EngUtil.Dto.Mapper.csproj" />
   </ItemGroup>
 
 </Project>

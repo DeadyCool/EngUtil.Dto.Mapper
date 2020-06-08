@@ -5,6 +5,7 @@ namespace engUtil.Dto.Mapper_Test.Entities
 {
     public class InvoiceHeader
     {
+
         public InvoiceHeader() { }
 
         public InvoiceHeader(int recId, 

@@ -1,6 +1,10 @@
-﻿using System;
+﻿// --------------------------------------------------------------------------------
+// <copyright filename="MapDefinitionAttribute.cs" date="12-13-2019">(c) 2019 All Rights Reserved</copyright>
+// <author>Oliver Engels</author>
+// --------------------------------------------------------------------------------
+using System;
 
-namespace engUtil.Dto
+namespace EngUtil.Dto
 {
     [AttributeUsage(AttributeTargets.Class)]
     public class MapDefinitionAttribute : Attribute
